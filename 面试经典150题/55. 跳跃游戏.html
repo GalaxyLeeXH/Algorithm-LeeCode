@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="exporter-version" content="Evernote Mac 9.6.12 (471320)"/><meta name="altitude" content="37.68182754516602"/><meta name="author" content="uq2bca3m"/><meta name="created" content="2023-06-07 03:05:18 +0000"/><meta name="latitude" content="39.99011589187994"/><meta name="longitude" content="116.5074033434635"/><meta name="source" content="desktop.mac"/><meta name="updated" content="2023-06-07 03:08:38 +0000"/><meta name="content-class" content="yinxiang.markdown"/><title>55. 跳跃游戏</title></head><body><div style="font-size: 14px; margin: 0; padding: 0; width: 100%;"><p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">给定一个非负整数数组&nbsp;&nbsp;nums ，你最初位于数组的 第一个下标 。</p>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">数组中的每个元素代表你在该位置可以跳跃的最大长度。</p>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">判断你是否能够到达最后一个下标。</p>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;"/>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">示例&nbsp;&nbsp;1：</p>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">输入：nums = [2,3,1,1,4]<br/>
+输出：true<br/>
+解释：可以先跳 1 步，从下标 0 到达下标 1, 然后再从下标 1 跳 3 步到达最后一个下标。<br/>
+示例&nbsp;&nbsp;2：</p>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">输入：nums = [3,2,1,0,4]<br/>
+输出：false<br/>
+解释：无论怎样，总会到达下标为 3 的位置。但该下标的最大跳跃长度是 0 ， 所以永远不可能到达最后一个下标。</p>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">提示：</p>
+<p style="line-height: 160%; box-sizing: content-box; margin: 10px 0; color: #333;">1 &lt;= nums.length &lt;= 3 * 104<br/>
+0 &lt;= nums[i] &lt;= 105</p>
+<pre style="line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; margin: 2px 0 8px; background-color: #f5f7f8;"><code style="display: block; overflow-x: auto; background: #1e1e1e; line-height: 160%; box-sizing: content-box; border: 0; border-radius: 0; letter-spacing: -.3px; padding: 18px; color: #f4f4f4; white-space: pre-wrap;">class Solution:
+    def canJump(self, nums: List[int]) -&gt; bool:
+        """
+        依次遍历数组中的每一个位置，并实时维护 最远可以到达的位置。对于当前遍历到的位置 
+        x，如果它在 最远可以到达的位置 的范围内，那么我们就可以从起点通过若干次跳跃到达该位置
+        """
+        reach = 0
+        for i in range(len(nums)-1):
+            # 当前的步数不够到达下一步的时候就直接return False -&gt; 比如第一个元素为0,肯定到不了第二步
+            if reach &lt; i:
+                return False
+            reach = max(i+nums[i], reach)
+        print(reach)
+        # 如果最后一步还无法到达最后一位,那就说明不可达
+        if reach &lt; len(nums)-1:
+            return False
+        else:
+            return True
+</code></pre>
+</div><center style="display:none !important;visibility:collapse !important;height:0 !important;white-space:nowrap;width:100%;overflow:hidden">%E7%BB%99%E5%AE%9A%E4%B8%80%E4%B8%AA%E9%9D%9E%E8%B4%9F%E6%95%B4%E6%95%B0%E6%95%B0%E7%BB%84%C2%A0nums%20%EF%BC%8C%E4%BD%A0%E6%9C%80%E5%88%9D%E4%BD%8D%E4%BA%8E%E6%95%B0%E7%BB%84%E7%9A%84%20%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%B8%8B%E6%A0%87%20%E3%80%82%0A%0A%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%AF%8F%E4%B8%AA%E5%85%83%E7%B4%A0%E4%BB%A3%E8%A1%A8%E4%BD%A0%E5%9C%A8%E8%AF%A5%E4%BD%8D%E7%BD%AE%E5%8F%AF%E4%BB%A5%E8%B7%B3%E8%B7%83%E7%9A%84%E6%9C%80%E5%A4%A7%E9%95%BF%E5%BA%A6%E3%80%82%0A%0A%E5%88%A4%E6%96%AD%E4%BD%A0%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%88%B0%E8%BE%BE%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%B8%8B%E6%A0%87%E3%80%82%0A%0A%C2%A0%0A%0A%E7%A4%BA%E4%BE%8B%C2%A01%EF%BC%9A%0A%0A%E8%BE%93%E5%85%A5%EF%BC%9Anums%20%3D%20%5B2%2C3%2C1%2C1%2C4%5D%0A%E8%BE%93%E5%87%BA%EF%BC%9Atrue%0A%E8%A7%A3%E9%87%8A%EF%BC%9A%E5%8F%AF%E4%BB%A5%E5%85%88%E8%B7%B3%201%20%E6%AD%A5%EF%BC%8C%E4%BB%8E%E4%B8%8B%E6%A0%87%200%20%E5%88%B0%E8%BE%BE%E4%B8%8B%E6%A0%87%201%2C%20%E7%84%B6%E5%90%8E%E5%86%8D%E4%BB%8E%E4%B8%8B%E6%A0%87%201%20%E8%B7%B3%203%20%E6%AD%A5%E5%88%B0%E8%BE%BE%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%B8%8B%E6%A0%87%E3%80%82%0A%E7%A4%BA%E4%BE%8B%C2%A02%EF%BC%9A%0A%0A%E8%BE%93%E5%85%A5%EF%BC%9Anums%20%3D%20%5B3%2C2%2C1%2C0%2C4%5D%0A%E8%BE%93%E5%87%BA%EF%BC%9Afalse%0A%E8%A7%A3%E9%87%8A%EF%BC%9A%E6%97%A0%E8%AE%BA%E6%80%8E%E6%A0%B7%EF%BC%8C%E6%80%BB%E4%BC%9A%E5%88%B0%E8%BE%BE%E4%B8%8B%E6%A0%87%E4%B8%BA%203%20%E7%9A%84%E4%BD%8D%E7%BD%AE%E3%80%82%E4%BD%86%E8%AF%A5%E4%B8%8B%E6%A0%87%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%B3%E8%B7%83%E9%95%BF%E5%BA%A6%E6%98%AF%200%20%EF%BC%8C%20%E6%89%80%E4%BB%A5%E6%B0%B8%E8%BF%9C%E4%B8%8D%E5%8F%AF%E8%83%BD%E5%88%B0%E8%BE%BE%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%B8%8B%E6%A0%87%E3%80%82%0A%C2%A0%0A%0A%E6%8F%90%E7%A4%BA%EF%BC%9A%0A%0A1%20%3C%3D%20nums.length%20%3C%3D%203%20*%20104%0A0%20%3C%3D%20nums%5Bi%5D%20%3C%3D%20105%0A%0A%0A%60%60%60python%0Aclass%20Solution%3A%0A%20%20%20%20def%20canJump(self%2C%20nums%3A%20List%5Bint%5D)%20-%3E%20bool%3A%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%E4%BE%9D%E6%AC%A1%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%AF%8F%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE%EF%BC%8C%E5%B9%B6%E5%AE%9E%E6%97%B6%E7%BB%B4%E6%8A%A4%20%E6%9C%80%E8%BF%9C%E5%8F%AF%E4%BB%A5%E5%88%B0%E8%BE%BE%E7%9A%84%E4%BD%8D%E7%BD%AE%E3%80%82%E5%AF%B9%E4%BA%8E%E5%BD%93%E5%89%8D%E9%81%8D%E5%8E%86%E5%88%B0%E7%9A%84%E4%BD%8D%E7%BD%AE%20%0A%20%20%20%20%20%20%20%20x%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%AE%83%E5%9C%A8%20%E6%9C%80%E8%BF%9C%E5%8F%AF%E4%BB%A5%E5%88%B0%E8%BE%BE%E7%9A%84%E4%BD%8D%E7%BD%AE%20%E7%9A%84%E8%8C%83%E5%9B%B4%E5%86%85%EF%BC%8C%E9%82%A3%E4%B9%88%E6%88%91%E4%BB%AC%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BB%8E%E8%B5%B7%E7%82%B9%E9%80%9A%E8%BF%87%E8%8B%A5%E5%B9%B2%E6%AC%A1%E8%B7%B3%E8%B7%83%E5%88%B0%E8%BE%BE%E8%AF%A5%E4%BD%8D%E7%BD%AE%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20reach%20%3D%200%0A%20%20%20%20%20%20%20%20for%20i%20in%20range(len(nums)-1)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20%E5%BD%93%E5%89%8D%E7%9A%84%E6%AD%A5%E6%95%B0%E4%B8%8D%E5%A4%9F%E5%88%B0%E8%BE%BE%E4%B8%8B%E4%B8%80%E6%AD%A5%E7%9A%84%E6%97%B6%E5%80%99%E5%B0%B1%E7%9B%B4%E6%8E%A5return%20False%20-%3E%20%E6%AF%94%E5%A6%82%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E4%B8%BA0%2C%E8%82%AF%E5%AE%9A%E5%88%B0%E4%B8%8D%E4%BA%86%E7%AC%AC%E4%BA%8C%E6%AD%A5%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20reach%20%3C%20i%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20False%0A%20%20%20%20%20%20%20%20%20%20%20%20reach%20%3D%20max(i%2Bnums%5Bi%5D%2C%20reach)%0A%20%20%20%20%20%20%20%20print(reach)%0A%20%20%20%20%20%20%20%20%23%20%E5%A6%82%E6%9E%9C%E6%9C%80%E5%90%8E%E4%B8%80%E6%AD%A5%E8%BF%98%E6%97%A0%E6%B3%95%E5%88%B0%E8%BE%BE%E6%9C%80%E5%90%8E%E4%B8%80%E4%BD%8D%2C%E9%82%A3%E5%B0%B1%E8%AF%B4%E6%98%8E%E4%B8%8D%E5%8F%AF%E8%BE%BE%0A%20%20%20%20%20%20%20%20if%20reach%20%3C%20len(nums)-1%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20False%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20True%0A%60%60%60</center></body></html>
